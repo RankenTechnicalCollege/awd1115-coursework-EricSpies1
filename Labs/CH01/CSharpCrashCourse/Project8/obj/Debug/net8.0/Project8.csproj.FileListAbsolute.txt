@@ -1,0 +1,15 @@
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\bin\Debug\net8.0\Project8.exe
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\bin\Debug\net8.0\Project8.deps.json
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\bin\Debug\net8.0\Project8.runtimeconfig.json
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\bin\Debug\net8.0\Project8.dll
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\bin\Debug\net8.0\Project8.pdb
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\Project8.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\Project8.AssemblyInfoInputs.cache
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\Project8.AssemblyInfo.cs
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\Project8.csproj.CoreCompileInputs.cache
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\Project8.sourcelink.json
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\Project8.dll
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\refint\Project8.dll
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\Project8.pdb
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\Project8.genruntimeconfig.cache
+C:\Users\Brand\Documents\GitHub\awd1115-coursework-EricSpies1\Labs\CH01\CSharpCrashCourse\Project8\obj\Debug\net8.0\ref\Project8.dll

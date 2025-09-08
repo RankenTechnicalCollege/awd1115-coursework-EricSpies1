@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+    var title = ViewData["Title"] as string ?? "Price Quotation";
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="topnav">
+        <nav class="container navlinks">
+            <a asp-controller="Home" asp-action="Index">Price Quote</a>
+            <a asp-controller="Tip" asp-action="Index">Tip Calculator</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

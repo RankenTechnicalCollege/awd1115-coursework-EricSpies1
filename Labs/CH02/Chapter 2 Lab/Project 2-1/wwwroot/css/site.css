@@ -1,0 +1,106 @@
+:root {
+    --accent: #1e88e5;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: system-ui, Arial, sans-serif;
+}
+
+.container {
+    max-width: 720px;
+    margin: 3rem auto;
+}
+
+h1 {
+    margin-bottom: 1rem;
+}
+
+.form .row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.form label {
+    font-weight: 600;
+}
+
+.form input {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+    .form input[readonly] {
+        background: #f8f8f8;
+    }
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.linklike {
+    background: transparent;
+    color: var(--accent);
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 8px 0;
+}
+
+.text-danger {
+    color: #c62828;
+}
+
+.validation-summary {
+    margin-bottom: 8px;
+}
+
+.topnav {
+    background: #f3f6fb;
+    border-bottom: 1px solid #e5e8ef;
+}
+
+.navlinks {
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+}
+
+    .navlinks a {
+        text-decoration: none;
+        color: #0b63c5;
+        font-weight: 600;
+    }
+
+.tips {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+}
+
+.tip-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+    .tip-row:last-child {
+        border-bottom: none;
+    }

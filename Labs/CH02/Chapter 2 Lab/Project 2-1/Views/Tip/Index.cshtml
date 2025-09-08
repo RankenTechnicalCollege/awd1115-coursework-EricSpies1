@@ -1,0 +1,39 @@
+﻿@model PriceQuotation.Models.TipModel
+@{
+    ViewData["Title"] = "Tip Calculator";
+    var tips = Model.GetTips().ToList();
+}
+
+<h1>Tip Calculator</h1>
+
+<div class="validation-summary">
+    @Html.ValidationSummary(excludePropertyErrors: true, "", new { @class = "text-danger" })
+</div>
+
+<form asp-action="Index" method="post" class="form">
+    <div class="row">
+        <label asp-for="MealCost"></label>
+        <input asp-for="MealCost" />
+        <span asp-validation-for="MealCost" class="text-danger"></span>
+    </div>
+
+    <fieldset class="tips">
+        <legend>Tip amounts</legend>
+        <div class="tip-row"><span>15%</span><span>@tips[0].amount.ToString("C")</span></div>
+        <div class="tip-row"><span>18%</span><span>@tips[1].amount.ToString("C")</span></div>
+        <div class="tip-row"><span>20%</span><span>@tips[2].amount.ToString("C")</span></div>
+    </fieldset>
+
+    <div class="actions">
+        <button type="submit" class="btn">Calculate</button>
+        <button type="submit" name="actionType" value="clear" class="linklike">Clear</button>
+    </div>
+
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

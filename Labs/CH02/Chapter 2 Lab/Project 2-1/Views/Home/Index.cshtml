@@ -1,0 +1,47 @@
+﻿@model PriceQuotation.Models.PriceQuote
+@{
+    ViewData["Title"] = "Price Quotation";
+}
+
+<h1>Price Quotation</h1>
+
+<div class="validation-summary">
+    @Html.ValidationSummary(excludePropertyErrors: true, "", new { @class = "text-danger" })
+</div>
+
+<form asp-action="Index" method="post" class="form">
+    <div class="row">
+        <label asp-for="Subtotal"></label>
+        <input asp-for="Subtotal" />
+        <span asp-validation-for="Subtotal" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <label asp-for="DiscountPercent"></label>
+        <input asp-for="DiscountPercent" />
+        <span asp-validation-for="DiscountPercent" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <label>Discount amount</label>
+        <input value="@Model.DiscountAmount.ToString("C")" readonly />
+    </div>
+
+    <div class="row">
+        <label>Total</label>
+        <input value="@Model.Total.ToString("C")" readonly />
+    </div>
+
+    <div class="actions">
+        <button type="submit" class="btn">Calculate</button>
+        <button type="submit" name="actionType" value="clear" class="linklike">Clear</button>
+    </div>
+
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,14 @@
+Project Title: Personal Finance Tracker
+
+Description:
+For my final project, I plan to build a Personal Finance Tracker web application. The purpose of this app is to help users keep track of their income, expenses, and budgets in one place. It will let users add and edit transactions, categorize their spending, and view summaries of their finances.
+
+Planned Features:
+- Add, edit, and delete transactions
+- Organize transactions by account and category
+- View monthly spending totals and simple reports
+- Mobile-friendly design using Bootstrap
+- Secure login so users can access their own data
+
+Reason for Choosing:
+I chose this project because it’s practical and something I would find useful myself.

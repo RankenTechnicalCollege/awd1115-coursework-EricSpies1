@@ -1,0 +1,15 @@
+# Visual Studio cache
+.vs/
+*.vscode/
+
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Other common junk
+*.dbmdl
+*.log

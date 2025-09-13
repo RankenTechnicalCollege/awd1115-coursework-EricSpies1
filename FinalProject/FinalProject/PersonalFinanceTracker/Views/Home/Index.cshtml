@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Personal Finance Tracker — Budget, Expenses, and Savings";
+    ViewData["Description"] = "Track income, expenses, budgets, and savings goals with a responsive ASP.NET Core MVC app using Bootstrap.";
+}
+
+<section class="row align-items-center g-4">
+    <div class="col-12 col-lg-6">
+        <h1 class="display-5 fw-bold">Take control of your money</h1>
+        <p class="lead lead-lg">
+            Personal Finance Tracker helps you organize accounts, log transactions,
+            categorize spending, and keep budgets on track—all in one place.
+        </p>
+
+        <h2 class="h4 mt-4">What you can do</h2>
+        <p class="mb-1">• Add, edit, and delete transactions across your accounts.</p>
+        <p class="mb-1">• Categorize spending to see where your money goes.</p>
+        <p class="mb-3">• View monthly budgets and simple reports on desktop or phone.</p>
+
+        <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Register">Get Started</a>
+        <a class="btn btn-outline-primary btn-lg ms-2" asp-controller="Accounts" asp-action="Index">View Accounts</a>
+    </div>
+
+    <div class="col-12 col-lg-6 text-center">
+        <img src="~/img/logo.svg" alt="Personal Finance Tracker logo" class="img-fluid" />
+    </div>
+</section>
+
+<section class="mt-5">
+    <h2 class="h4">Why this app?</h2>
+    <p>
+        Managing finances is easier when everything is in one place. This app is designed
+        to be simple, fast, and mobile-friendly. As the semester progresses, new features like
+        budgets, reports, and goals will be added.
+    </p>
+</section>

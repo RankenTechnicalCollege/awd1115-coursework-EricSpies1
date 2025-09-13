@@ -1,0 +1,43 @@
+﻿@model HOT1.Models.OrderModel
+@{
+    ViewData["Title"] = "T-Shirt Order Form";
+}
+
+<h1 class="mb-4">Order T-Shirts</h1>
+
+<form asp-action="Index" method="post">
+    <div class="form-floating mb-3">
+        <input asp-for="Quantity" class="form-control" placeholder="Quantity" />
+        <label asp-for="Quantity">Quantity</label>
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="DiscountCode" class="form-control" placeholder="Discount Code" />
+        <label asp-for="DiscountCode">Discount Code (optional)</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Order</button>
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <p class="text-danger mt-2">@ViewBag.Error</p>
+}
+
+@if (Model.Quantity != null && Model.Total > 0)
+{
+    <div class="mt-4">
+        <h2>Receipt</h2>
+        <p>Subtotal: @Model.Subtotal.ToString("C")</p>
+        <p>Discount: -@Model.DiscountAmount.ToString("C")</p>
+        <p>Tax: @Model.Tax.ToString("C")</p>
+        <p><strong>Total: @Model.Total.ToString("C")</strong></p>
+    </div>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

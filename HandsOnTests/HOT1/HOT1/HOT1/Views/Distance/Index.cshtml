@@ -1,0 +1,26 @@
+﻿@model HOT1.Models.DistanceModel
+@{
+    ViewData["Title"] = "Distance Converter";
+}
+
+<h1 class="mb-4">Distance Converter</h1>
+
+<form asp-action="Index" method="post" class="mb-3">
+    <div class="form-floating mb-3">
+        <input asp-for="Inches" class="form-control" placeholder="Inches" />
+        <label asp-for="Inches">Distance in Inches</label>
+        <span asp-validation-for="Inches" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Convert</button>
+</form>
+
+@if (ViewBag.Result != null)
+{
+    <div class="alert alert-success">@ViewBag.Result</div>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,25 @@
+﻿@model ContactManager.Models.Contact
+@{
+    ViewData["Title"] = "Contact Details";
+}
+<h1 class="mb-3">@Model.Firstname @Model.Lastname</h1>
+
+<dl class="row">
+    <dt class="col-sm-2">Phone</dt>
+    <dd class="col-sm-10">@Model.Phone</dd>
+
+    <dt class="col-sm-2">Email</dt>
+    <dd class="col-sm-10">@Model.Email</dd>
+
+    <dt class="col-sm-2">Category</dt>
+    <dd class="col-sm-10">@Model.Category?.Name</dd>
+
+    <dt class="col-sm-2">Date Added</dt>
+    <dd class="col-sm-10">@Model.DateAdded.ToLocalTime()</dd>
+</dl>
+
+<p class="mt-3">
+    <a class="btn btn-primary" asp-controller="Contacts" asp-action="Edit" asp-route-id="@Model.ContactId">Edit</a>
+    <a class="btn btn-outline-danger" asp-controller="Contacts" asp-action="Delete" asp-route-id="@Model.ContactId">Delete</a>
+    <a class="btn btn-secondary" asp-controller="Home" asp-action="Index">Back</a>
+</p>

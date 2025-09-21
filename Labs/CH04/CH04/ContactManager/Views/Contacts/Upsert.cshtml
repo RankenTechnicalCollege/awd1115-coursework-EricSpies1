@@ -1,0 +1,72 @@
+﻿@model ContactManager.Models.Contact
+@{
+    bool isEdit = Model.ContactId != 0;
+    ViewData["Title"] = isEdit ? "Edit Contact" : "Add Contact";
+}
+<h1 class="mb-3">@ViewData["Title"]</h1>
+
+<div class="text-danger">
+    @Html.ValidationSummary(excludePropertyErrors: true)
+</div>
+
+<form asp-action="@(isEdit ? "Edit" : "Add")" method="post">
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="ContactId" />
+    }
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Firstname" class="form-label"></label>
+            <input asp-for="Firstname" class="form-control" />
+            <span asp-validation-for="Firstname" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Lastname" class="form-label"></label>
+            <input asp-for="Lastname" class="form-control" />
+            <span asp-validation-for="Lastname" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Phone" class="form-label"></label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Category</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
+                <option value="">-- Select --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Save</button>
+
+        @if (isEdit)
+        {
+            <button type="submit" formaction="@(Url.Action("CancelEdit", "Contacts", new { id = Model.ContactId, slug = Model.Slug }))"
+                    class="btn btn-secondary">
+                Cancel
+            </button>
+        }
+        else
+        {
+            <button type="submit" formaction="@(Url.Action("CancelAdd", "Contacts"))"
+                    class="btn btn-secondary">
+                Cancel
+            </button>
+        }
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

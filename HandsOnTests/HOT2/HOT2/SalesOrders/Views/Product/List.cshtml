@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SalesOrders.Models.Product>
+@{
+    ViewData["Title"] = "Manage Products";
+}
+<h1 class="mb-3">Products</h1>
+
+<p><a class="btn btn-primary" asp-controller="Product" asp-action="AddEdit">Add Product</a></p>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th class="text-end">Price</th>
+            <th class="text-end">Qty</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td style="width:120px;">
+                    <img src="~/content/images/@p.ProductImage"
+                         alt="@p.ProductName"
+                         class="img-thumbnail"
+                         style="max-height:100px;" />
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@p.ProductID" asp-route-slug="@p.Slug">
+                        @p.ProductName
+                    </a>
+                </td>
+                <td>@p.Category?.CategoryName</td>
+                <td class="text-end">@p.ProductPrice.ToString("C")</td>
+                <td class="text-end">@p.ProductQty</td>
+                <td class="text-end">
+                    <a class="btn btn-outline-secondary btn-sm" asp-action="AddEdit" asp-route-id="@p.ProductID">Edit</a>
+                    <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@p.ProductID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

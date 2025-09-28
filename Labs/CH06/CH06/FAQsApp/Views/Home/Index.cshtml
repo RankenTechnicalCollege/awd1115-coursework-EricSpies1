@@ -1,0 +1,60 @@
+@model FAQsApp.Models.HomeViewModel
+@{
+    ViewData["Title"] = "FAQs";
+}
+
+@section TopicNav {
+    @foreach (var t in Model.Topics)
+    {
+        var active = t.TopicId == Model.SelectedTopicId ? "active" : "";
+        <li class="nav-item">
+            <a class="nav-link @active" href="/topic/@t.TopicId/">@t.Name</a>
+        </li>
+    }
+}
+
+<div class="row">
+    <aside class="col-12 col-md-3 mb-3">
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action @(Model.SelectedCategoryId is null ? "active" : "")" href="/">All Categories</a>
+            @foreach (var c in Model.Categories)
+            {
+                var active = c.CategoryId == Model.SelectedCategoryId ? "active" : "";
+                var url = Model.SelectedTopicId is null
+                    ? $"/category/{c.CategoryId}/"
+                    : $"/topic/{Model.SelectedTopicId}/category/{c.CategoryId}/";
+                <a class="list-group-item list-group-item-action @active" href="@url">@c.Name</a>
+            }
+        </div>
+    </aside>
+
+    <section class="col-12 col-md-9">
+        @if (!Model.Faqs.Any())
+        {
+            <div class="alert alert-warning">No FAQs match your filters.</div>
+        }
+        else
+        {
+            <div class="accordion" id="faqAccordion">
+                @for (int i = 0; i < Model.Faqs.Count(); i++)
+                {
+                    var f = Model.Faqs.ElementAt(i);
+                    var headingId = $"h{i}";
+                    var collapseId = $"c{i}";
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="@headingId">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId">
+                                <strong>@f.Question</strong> <span class="ms-2 text-muted">(@f.Topic?.Name • @f.Category?.Name)</span>
+                            </button>
+                        </h2>
+                        <div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="@headingId" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                @f.Answer
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </section>
+</div>

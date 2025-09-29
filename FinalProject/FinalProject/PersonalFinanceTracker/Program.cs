@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Routing;
 using PersonalFinanceTracker.Data;
 using PersonalFinanceTracker.Data.Repositories;
 
@@ -27,6 +28,12 @@ builder.Services.AddSession(o =>
     o.IdleTimeout = TimeSpan.FromHours(4);
 });
 
+builder.Services.Configure<RouteOptions>(o =>
+{
+    o.LowercaseUrls = true;
+    o.AppendTrailingSlash = true;
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -35,7 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/home/error/");
     app.UseHsts();
 }
 
@@ -48,19 +55,21 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 
+
 app.MapControllerRoute(
     name: "budget",
-    pattern: "budget/{year:int}/{month:int}",
+    pattern: "budget/{year:int}/{month:int}/",
     defaults: new { controller = "Budget", action = "Index" });
 
 app.MapControllerRoute(
     name: "transaction_friendly",
-    pattern: "t/{id:int}/{slug?}",
+    pattern: "t/{id:int}/{slug?}/",
     defaults: new { controller = "Transactions", action = "Details" });
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}/");
 
 app.MapRazorPages();
+
 app.Run();

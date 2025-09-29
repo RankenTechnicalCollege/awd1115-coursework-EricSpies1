@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PersonalFinanceTracker.Models;
+using PersonalFinanceTracker.Utilities;
 using PersonalFinanceTracker.Validation;
-using PersonalFinanceTracker.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalFinanceTracker.Models
 {
@@ -28,6 +30,9 @@ namespace PersonalFinanceTracker.Models
         public TransactionType Type { get; set; } = TransactionType.Expense;
 
         public ICollection<TransactionCategory> TransactionCategories { get; set; } = new List<TransactionCategory>();
+
+        [NotMapped]
+        public string Slug => SlugHelper.ToKebab(Payee);
     }
 
     public enum TransactionType { Expense = 0, Deposit = 1 }

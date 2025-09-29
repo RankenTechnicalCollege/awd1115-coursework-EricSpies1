@@ -1,0 +1,34 @@
+﻿@model PersonalFinanceTracker.Models.Transaction
+
+@{
+    ViewData["Title"] = "Transaction Details";
+}
+
+<h1 class="mb-3">Transaction</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Id</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+
+            <dt class="col-sm-3">Payee</dt>
+            <dd class="col-sm-9">@Model.Payee</dd>
+
+            <dt class="col-sm-3">Amount</dt>
+            <dd class="col-sm-9">@Model.Amount</dd>
+
+            <dt class="col-sm-3">Date</dt>
+            <dd class="col-sm-9">@Model.Date.ToShortDateString()</dd>
+
+            <dt class="col-sm-3">Type</dt>
+            <dd class="col-sm-9">@Model.Type</dd>
+
+            <dt class="col-sm-3">Account</dt>
+            <dd class="col-sm-9">@Model.Account?.Name</dd>
+
+            <dt class="col-sm-3">Notes</dt>
+            <dd class="col-sm-9">@Model.Notes</dd>
+        </dl>
+    </div>
+</div>

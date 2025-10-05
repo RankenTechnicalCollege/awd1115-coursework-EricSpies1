@@ -1,4 +1,28 @@
-﻿<!DOCTYPE html>
+﻿@using System
+@functions {
+    public string NavActive(string controller, string? action = null, string? area = "")
+    {
+        var routeData = ViewContext.RouteData;
+        var currentController = routeData.Values["controller"]?.ToString() ?? "";
+        var currentAction = routeData.Values["action"]?.ToString() ?? "";
+        var currentArea = routeData.Values.ContainsKey("area") ? routeData.Values["area"]?.ToString() ?? "" : "";
+
+        if (!string.IsNullOrWhiteSpace(area))
+        {
+            if (!string.Equals(currentArea, area, StringComparison.OrdinalIgnoreCase))
+                return "";
+        }
+
+        if (string.Equals(currentController, controller, StringComparison.OrdinalIgnoreCase))
+        {
+            if (action == null || string.Equals(currentAction, action, StringComparison.OrdinalIgnoreCase))
+                return "active";
+        }
+
+        return "";
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -33,16 +57,16 @@
                 <div id="mainNav" class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link @NavActive("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Index">Accounts</a>
+                            <a class="nav-link @NavActive("Accounts", "Index")" asp-area="" asp-controller="Accounts" asp-action="Index">Accounts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Transactions</a>
+                            <a class="nav-link @NavActive("Transactions", "Index")" asp-area="" asp-controller="Transactions" asp-action="Index">Transactions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reports</a>
+                            <a class="nav-link @NavActive("Reports", "Index")" asp-area="" asp-controller="Reports" asp-action="Index">Reports</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -70,6 +94,10 @@
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @*
+    *@
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

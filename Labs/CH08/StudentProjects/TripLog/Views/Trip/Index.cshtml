@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TripLog.Models.Trip>
+@{
+    ViewData["Title"] = "Home";
+}
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-success">@msg</div>
+}
+
+<p><a class="btn btn-primary" asp-action="AddPage1">Add Trip</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Destination</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Accommodations</th>
+            <th>Things To Do</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.Destination</td>
+                <td>@t.StartDate.ToShortDateString()</td>
+                <td>@t.EndDate.ToShortDateString()</td>
+                <td>
+                    <div>@t.Accommodation</div>
+                    @if (!string.IsNullOrWhiteSpace(t.AccommodationPhone))
+                    {
+                        <div>Phone: @t.AccommodationPhone</div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(t.AccommodationEmail))
+                    {
+                        <div>Email: @t.AccommodationEmail</div>
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(t.Activity1))
+                    {
+                        <div>@t.Activity1</div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(t.Activity2))
+                    {
+                        <div>@t.Activity2</div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(t.Activity3))
+                    {
+                        <div>@t.Activity3</div>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

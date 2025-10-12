@@ -1,0 +1,28 @@
+﻿@model TripLog.ViewModels.AddTripPage3VM
+@{
+    ViewData["Title"] = "Add Trip - Page 3";
+}
+
+<form asp-action="AddPage3" method="post" class="row g-3">
+    <div class="col-12">
+        <label asp-for="Activity1" class="form-label">Activity 1</label>
+        <input asp-for="Activity1" class="form-control" />
+    </div>
+    <div class="col-12">
+        <label asp-for="Activity2" class="form-label">Activity 2</label>
+        <input asp-for="Activity2" class="form-control" />
+    </div>
+    <div class="col-12">
+        <label asp-for="Activity3" class="form-label">Activity 3</label>
+        <input asp-for="Activity3" class="form-control" />
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-success" type="submit">Save</button>
+        <button class="btn btn-secondary" formaction="@Url.Action("Cancel")" formmethod="post">Cancel</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<KeyboardShop.Models.Keyboard>
+@{
+    ViewData["Title"] = "Keyboards";
+
+    var brands = Model.Select(m => m.Brand).Distinct().OrderBy(x => x).ToList();
+    var layouts = Model.Select(m => m.Layout).Distinct().OrderBy(x => x).ToList();
+
+    var selectedBrand = (string?)Context.Request.Query["brand"] ?? "all";
+    var selectedLayout = (string?)Context.Request.Query["layout"] ?? "all";
+}
+
+<h2 class="mb-3">Keyboards</h2>
+
+@await Html.PartialAsync("_StatusMessage")
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <label class="form-label">Brand</label>
+        <select name="brand" class="form-select" onchange="this.form.submit()">
+            <option value="all" selected="@(selectedBrand == "all")">All</option>
+            @foreach (var b in brands)
+            {
+                <option value="@b" selected="@(selectedBrand == b)">@b</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-auto">
+        <label class="form-label">Layout</label>
+        <select name="layout" class="form-select" onchange="this.form.submit()">
+            <option value="all" selected="@(selectedLayout == "all")">All</option>
+            @foreach (var l in layouts)
+            {
+                <option value="@l" selected="@(selectedLayout == l)">@l</option>
+            }
+        </select>
+    </div>
+
+    <noscript><div class="col-auto"><button class="btn btn-primary mt-4">Filter</button></div></noscript>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No keyboards match the selected filters.</div>
+}
+
+<div class="row row-cols-1 row-cols-md-3 g-3">
+    @foreach (var k in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img src="~/img/@k.ImageFile" class="card-img-top" alt="@k.Name" />
+                <div class="card-body">
+                    <h5 class="card-title mb-1">@k.Name</h5>
+                    <div class="text-muted small">@k.Brand • @k.SwitchType • @k.Layout</div>
+                    <div class="mt-2 fw-bold">@k.Price.ToString("C")</div>
+                </div>
+                <div class="card-footer d-flex gap-2">
+                    <a class="btn btn-outline-secondary btn-sm"
+                       asp-controller="Store" asp-action="Details" asp-route-slug="@k.Slug">
+                        View
+                    </a>
+
+                    <form asp-controller="Cart" asp-action="Add" method="post" class="ms-auto">
+                        <input type="hidden" name="id" value="@k.Id" />
+                        <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>

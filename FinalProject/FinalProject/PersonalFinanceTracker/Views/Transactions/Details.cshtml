@@ -1,34 +1,48 @@
 ﻿@model PersonalFinanceTracker.Models.Transaction
-
 @{
     ViewData["Title"] = "Transaction Details";
 }
+<h2 class="mb-3">Transaction Details</h2>
 
-<h1 class="mb-3">Transaction</h1>
-
-<div class="card">
+<div class="card shadow-sm mb-3">
     <div class="card-body">
-        <dl class="row mb-0">
-            <dt class="col-sm-3">Id</dt>
-            <dd class="col-sm-9">@Model.Id</dd>
-
-            <dt class="col-sm-3">Payee</dt>
-            <dd class="col-sm-9">@Model.Payee</dd>
-
-            <dt class="col-sm-3">Amount</dt>
-            <dd class="col-sm-9">@Model.Amount</dd>
-
+        <dl class="row">
             <dt class="col-sm-3">Date</dt>
             <dd class="col-sm-9">@Model.Date.ToShortDateString()</dd>
-
+            <dt class="col-sm-3">Payee</dt>
+            <dd class="col-sm-9">@Model.Payee</dd>
             <dt class="col-sm-3">Type</dt>
             <dd class="col-sm-9">@Model.Type</dd>
-
             <dt class="col-sm-3">Account</dt>
             <dd class="col-sm-9">@Model.Account?.Name</dd>
+            <dt class="col-sm-3">Amount</dt>
+            <dd class="col-sm-9">@Model.Amount.ToString("C")</dd>
+            @if (!string.IsNullOrWhiteSpace(Model.Notes))
+            {
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Notes</dd>
+            }
+            <dt class="col-sm-3">Categories</dt>
+            <dd class="col-sm-9">
+                @if (Model.TransactionCategories.Any())
+                {
+                    foreach (var tc in Model.TransactionCategories)
+                    {
+                        <span class="badge bg-secondary me-1">@tc.Category?.Name</span>
+                    }
+                }
+                else
+                {
 
-            <dt class="col-sm-3">Notes</dt>
-            <dd class="col-sm-9">@Model.Notes</dd>
+                    <em>—</em>
+                }
+            </dd>
         </dl>
     </div>
+</div>
+
+<div class="d-flex gap-2">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

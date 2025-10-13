@@ -1,27 +1,39 @@
 ﻿@model IEnumerable<PersonalFinanceTracker.Models.Account>
+@{
+    ViewData["Title"] = "Accounts";
+}
 
-<h1>Accounts</h1>
+<h2 class="mb-3">Accounts</h2>
 
 <p><a asp-action="Create" class="btn btn-primary">Add Account</a></p>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
         <tr>
             <th>Name</th>
+            <th>Transactions</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (Model != null && Model.Any())
         {
-            <tr>
-                <td>@item.Name</td>
-                <td>
-                    <a asp-area="Manage" asp-controller="Accounts" asp-action="Create">Add</a>
-                    <a asp-area="Manage" asp-controller="Accounts" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-area="Manage" asp-controller="Accounts" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+            foreach (var a in Model)
+            {
+                <tr>
+                    <td>@a.Name</td>
+                    <td>@(a.Transactions?.Count ?? 0)</td>
+                    <td class="text-end">
+                        <a asp-action="Edit" asp-route-id="@a.Id" class="btn btn-sm btn-warning me-1">Edit</a>
+                        <a asp-action="Details" asp-route-id="@a.Id" class="btn btn-sm btn-info me-1">Details</a>
+                        <a asp-action="Delete" asp-route-id="@a.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="3" class="text-center text-muted">No accounts found.</td></tr>
         }
     </tbody>
 </table>

@@ -66,6 +66,9 @@
                             <a class="nav-link @NavActive("Transactions", "Index")" asp-area="" asp-controller="Transactions" asp-action="Index">Transactions</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link @NavActive("Dashboard", "Index")" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link @NavActive("Reports", "Index")" asp-area="" asp-controller="Reports" asp-action="Index">Reports</a>
                         </li>
                     </ul>
@@ -94,9 +97,6 @@
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @*
-    *@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -1,0 +1,94 @@
+﻿@model PersonalFinanceTracker.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<h2 class="mb-3">Dashboard</h2>
+
+<div class="row">
+    <aside class="col-12 col-md-3 mb-3">
+        <div class="card">
+            <div class="card-header">Filters</div>
+            <div class="card-body">
+                <form method="get">
+                    <div class="mb-2">
+                        <label class="form-label">Account</label>
+                        <select name="accountId" class="form-select" onchange="this.form.submit()">
+                            <option value="all" selected="@("all" == Model.ActiveAccountId)">All</option>
+                            @foreach (var a in Model.Accounts)
+                            {
+                                <option value="@a.Id" selected="@(Model.ActiveAccountId == a.Id.ToString())">@a.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Category</label>
+                        <select name="categoryId" class="form-select" onchange="this.form.submit()">
+                            <option value="all" selected="@("all" == Model.ActiveCategoryId)">All</option>
+                            @foreach (var c in Model.Categories)
+                            {
+                                <option value="@c.Id" selected="@(Model.ActiveCategoryId == c.Id.ToString())">@c.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <noscript><button class="btn btn-primary w-100" type="submit">Apply</button></noscript>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">This Month</div>
+            <div class="card-body">
+                <div>Spending: <strong>@Model.MonthToDateSpending.ToString("C")</strong></div>
+                <div>Deposits: <strong>@Model.MonthToDateDeposits.ToString("C")</strong></div>
+                <div>Transactions: <strong>@Model.TransactionCount</strong></div>
+            </div>
+        </div>
+    </aside>
+
+    <section class="col-12 col-md-9">
+        @await Html.PartialAsync("_StatusMessage")
+        <div class="card">
+            <div class="card-header">Recent Transactions</div>
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Payee</th>
+                            <th>Type</th>
+                            <th>Account</th>
+                            <th>Categories</th>
+                            <th class="text-end">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var t in Model.RecentTransactions)
+                        {
+                            <tr>
+                                <td>@t.Date.ToShortDateString()</td>
+                                <td>@t.Payee</td>
+                                <td>@t.Type</td>
+                                <td>@t.Account?.Name</td>
+                                <td>
+                                    @if (t.TransactionCategories.Any())
+                                    {
+                                        foreach (var tc in t.TransactionCategories)
+                                        {
+                                            <span class="badge bg-secondary me-1">@tc.Category?.Name</span>
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                        <em>—</em>
+                                    }
+                                </td>
+                                <td class="text-end">@t.Amount.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

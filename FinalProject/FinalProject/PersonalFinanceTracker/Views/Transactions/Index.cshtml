@@ -1,50 +1,61 @@
 ﻿@model IEnumerable<PersonalFinanceTracker.Models.Transaction>
-
 @{
     ViewData["Title"] = "Transactions";
 }
+@await Html.PartialAsync("_StatusMessage")
 
-<h1 class="mb-3">Transactions</h1>
+<h2 class="mb-3">Transactions</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Add Transaction</a>
-</p>
+<p><a asp-action="Create" class="btn btn-primary">Add Transaction</a></p>
 
-<table class="table table-striped align-middle">
-    <thead>
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
         <tr>
             <th>Date</th>
             <th>Payee</th>
-            <th class="text-end">Amount</th>
-            <th>Account</th>
             <th>Type</th>
+            <th>Account</th>
+            <th>Categories</th>
+            <th class="text-end">Amount</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var tx in Model)
+        @if (Model != null && Model.Any())
         {
-            <tr>
-                <td>@tx.Date.ToShortDateString()</td>
-                <td>
-                    <a asp-route="transaction_friendly"
-                       asp-route-id="@tx.Id"
-                       asp-route-slug="@tx.Slug">
-                        @tx.Payee
-                    </a>
-                </td>
-                <td class="text-end">@tx.Amount.ToString("C")</td>
-                <td>@tx.Account?.Name</td>
-                <td>@tx.Type</td>
-                <td class="text-end">
-                    <a class="btn btn-sm btn-outline-primary"
-                       asp-route="transaction_friendly"
-                       asp-route-id="@tx.Id"
-                       asp-route-slug="@tx.Slug">
-                        View
-                    </a>
-                </td>
-            </tr>
+            foreach (var tx in Model)
+            {
+                <tr>
+                    <td>@tx.Date.ToShortDateString()</td>
+                    <td>@tx.Payee</td>
+                    <td>@tx.Type</td>
+                    <td>@tx.Account?.Name</td>
+                    <td>
+                        @if (tx.TransactionCategories != null && tx.TransactionCategories.Any())
+                        {
+                            foreach (var tc in tx.TransactionCategories)
+                            {
+                                <span class="badge bg-secondary me-1">@tc.Category?.Name</span>
+                            }
+                        }
+                        else
+                        {
+
+                            <em>—</em>
+                        }
+                    </td>
+                    <td class="text-end">@tx.Amount.ToString("C")</td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@tx.Id" class="btn btn-sm btn-warning me-1">Edit</a>
+                        <a asp-action="Details" asp-route-id="@tx.Id" asp-route-slug="@tx.Slug" class="btn btn-sm btn-info me-1">Details</a>
+                        <a asp-action="Delete" asp-route-id="@tx.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="7" class="text-center text-muted">No transactions found.</td></tr>
         }
     </tbody>
 </table>

@@ -4,9 +4,11 @@
 }
 <h2 class="mb-3">Edit Transaction</h2>
 
-<form asp-action="Edit" method="post">
+<form asp-action="Edit" method="post" id="__txEditForm">
     @Html.AntiForgeryToken()
+
     <input type="hidden" asp-for="Id" />
+
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="mb-3">
@@ -48,16 +50,17 @@
         <span asp-validation-for="AccountId" class="text-danger"></span>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-5">
         <label class="form-label">Categories</label>
         <select name="categoryIds" asp-items="ViewBag.Categories" multiple class="form-select" size="6"></select>
     </div>
-
-    <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-    </div>
 </form>
+
+<div class="position-fixed bottom-0 start-0 end-0 bg-white border-top shadow-sm p-3 text-end"
+     style="z-index:1030;">
+    <button type="submit" form="__txEditForm" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

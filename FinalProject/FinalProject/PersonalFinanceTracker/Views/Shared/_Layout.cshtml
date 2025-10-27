@@ -37,10 +37,9 @@
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
     <link rel="stylesheet" href="~/PersonalFinanceTracker.styles.css" asp-append-version="true" />
 </head>
-<body class="app-body">
+<body class="app-body d-flex flex-column min-vh-100">
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark bg-brand border-bottom shadow-sm mb-3">
             <div class="container-fluid">
@@ -78,8 +77,9 @@
         </nav>
     </header>
 
-    <div class="container">
+    <div class="container flex-grow-1">
         <main role="main" class="pb-3">
+
             @RenderBody()
         </main>
     </div>

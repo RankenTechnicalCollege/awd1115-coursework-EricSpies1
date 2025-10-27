@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PersonalFinanceTracker.Data;
 using PersonalFinanceTracker.Models;
+using PersonalFinanceTracker.ViewModels;
 
 namespace PersonalFinanceTracker.Controllers
 {
@@ -13,17 +14,52 @@ namespace PersonalFinanceTracker.Controllers
         public TransactionsController(ApplicationDbContext db) => _db = db;
 
         [HttpGet("transactions/")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, string? search = null)
         {
-            var txs = await _db.Transactions
+            const int pageSize = 10;
+
+            var query = _db.Transactions
                 .Include(t => t.Account)
                 .Include(t => t.TransactionCategories)
                     .ThenInclude(tc => tc.Category)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim().ToLower();
+                query = query.Where(t =>
+                    t.Payee.ToLower().Contains(term) ||
+                    (t.Notes != null && t.Notes.ToLower().Contains(term))
+                );
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            if (totalPages == 0)
+                totalPages = 1;
+
+            if (page < 1) page = 1;
+            if (page > totalPages) page = totalPages;
+
+            var txs = await query
                 .OrderByDescending(t => t.Date)
                 .ThenByDescending(t => t.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
-            return View(txs);
+            var vm = new TransactionListViewModel
+            {
+                Transactions = txs,
+                PageNumber = page,
+                TotalPages = totalPages,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                SearchTerm = search ?? ""
+            };
+
+            return View(vm);
         }
 
         public async Task<IActionResult> Details(int id, string? slug)
@@ -164,3 +200,4 @@ namespace PersonalFinanceTracker.Controllers
         }
     }
 }
+

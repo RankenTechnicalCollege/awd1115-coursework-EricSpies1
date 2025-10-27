@@ -1,12 +1,31 @@
-﻿@model IEnumerable<PersonalFinanceTracker.Models.Transaction>
+﻿@model PersonalFinanceTracker.ViewModels.TransactionListViewModel
+
 @{
     ViewData["Title"] = "Transactions";
 }
+
 @await Html.PartialAsync("_StatusMessage")
 
 <h2 class="mb-3">Transactions</h2>
 
-<p><a asp-action="Create" class="btn btn-primary">Add Transaction</a></p>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input type="text"
+               name="search"
+               value="@Model.SearchTerm"
+               class="form-control"
+               placeholder="Search payee or notes..." />
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Add Transaction</a>
+</p>
 
 <table class="table table-striped table-bordered">
     <thead class="table-dark">
@@ -21,9 +40,9 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model != null && Model.Any())
+        @if (Model.Transactions != null && Model.Transactions.Any())
         {
-            foreach (var tx in Model)
+            foreach (var tx in Model.Transactions)
             {
                 <tr>
                     <td>@tx.Date.ToShortDateString()</td>
@@ -40,14 +59,16 @@
                         }
                         else
                         {
-
                             <em>—</em>
                         }
                     </td>
                     <td class="text-end">@tx.Amount.ToString("C")</td>
                     <td class="text-center">
                         <a asp-action="Edit" asp-route-id="@tx.Id" class="btn btn-sm btn-warning me-1">Edit</a>
-                        <a asp-action="Details" asp-route-id="@tx.Id" asp-route-slug="@tx.Slug" class="btn btn-sm btn-info me-1">Details</a>
+                        <a asp-action="Details"
+                           asp-route-id="@tx.Id"
+                           asp-route-slug="@tx.Slug"
+                           class="btn btn-sm btn-info me-1">Details</a>
                         <a asp-action="Delete" asp-route-id="@tx.Id" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>
@@ -55,7 +76,60 @@
         }
         else
         {
-            <tr><td colspan="7" class="text-center text-muted">No transactions found.</td></tr>
+            <tr>
+                <td colspan="7" class="text-center text-muted">
+                    No transactions found.
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Transaction pages">
+        <ul class="pagination">
+
+            <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@(Model.PrevPage)"
+                   asp-route-search="@Model.SearchTerm">
+                    Previous
+                </a>
+            </li>
+
+            @for (int p = 1; p <= Model.TotalPages; p++)
+            {
+                <li class="page-item @(p == Model.PageNumber ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@p"
+                       asp-route-search="@Model.SearchTerm">
+                        @p
+                    </a>
+                </li>
+            }
+
+            <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@(Model.NextPage)"
+                   asp-route-search="@Model.SearchTerm">
+                    Next
+                </a>
+            </li>
+
+        </ul>
+        <div class="text-muted small">
+            Showing page @Model.PageNumber of @Model.TotalPages
+            (@Model.TotalCount total results)
+        </div>
+    </nav>
+}
+else
+{
+    <div class="text-muted small">
+        Showing all @Model.TotalCount result(s)
+    </div>
+}

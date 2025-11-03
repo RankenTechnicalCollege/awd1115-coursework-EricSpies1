@@ -1,0 +1,29 @@
+﻿@model AppointmentApp.Models.Appointment
+@{
+    ViewData["Title"] = "Schedule";
+}
+<h2>Schedule an Appointment</h2>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="CustomerId" class="form-label"></label>
+        <select asp-for="CustomerId" asp-items="ViewBag.CustomerId" class="form-select"></select>
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Start" class="form-label"></label>
+        <input asp-for="Start" type="datetime-local" class="form-control" />
+        <div class="form-text">Must be in the future and on the exact hour (e.g., 2025-03-15 08:00).</div>
+        <span asp-validation-for="Start" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

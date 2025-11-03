@@ -1,0 +1,30 @@
+﻿@model IEnumerable<AppointmentApp.Models.Appointment>
+@{
+    ViewData["Title"] = "Manage Appointments";
+}
+<h2>Manage Appointments</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Start</th>
+            <th>Customer</th>
+            <th>Ends</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.Start.ToString("g")</td>
+                <td>@a.Customer?.Username</td>
+                <td>@a.Start.AddHours(1).ToString("t")</td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@a.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@a.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

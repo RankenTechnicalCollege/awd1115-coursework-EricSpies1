@@ -1,0 +1,45 @@
+﻿@model IEnumerable<QuarterlySales.Models.SalesEntry>
+@{
+    ViewData["Title"] = "Quarterly Sales";
+}
+<h3>Quarterly Sales</h3>
+
+<form asp-action="Index" method="get" class="row g-2 align-items-end mb-3">
+    <div class="col-auto">
+        <label class="form-label">Employee</label>
+        <select name="id" asp-items="ViewBag.EmployeeId" class="form-select">
+            <option value="">-- All --</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Year</th>
+            <th>Quarter</th>
+            <th>Employee</th>
+            <th class="text-end">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Year</td>
+                <td>@r.Quarter</td>
+                <td>@r.Employee?.FullName</td>
+                <td class="text-end">@r.Amount.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="3">Total Sales</th>
+            <th class="text-end">@(((decimal)ViewBag.Total).ToString("C"))</th>
+        </tr>
+    </tfoot>
+</table>

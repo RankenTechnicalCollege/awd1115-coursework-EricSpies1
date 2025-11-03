@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Quarterly Sales</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand navbar-light bg-light border-bottom">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Quarterly Sales</a>
+                <div class="navbar-nav">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-link" asp-controller="Sales" asp-action="Add">Add Sales</a>
+                    <a class="nav-link" asp-controller="Employee" asp-action="Add">Add Employee</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container my-3 flex-grow-1">
+        @if (TempData["Message"] is string msg)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @msg
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @RenderBody()
+    </main>
+
+    <footer class="border-top py-3 mt-auto">
+        <div class="container text-muted">
+            &copy; @DateTime.Now.Year Quarterly Sales
+        </div>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

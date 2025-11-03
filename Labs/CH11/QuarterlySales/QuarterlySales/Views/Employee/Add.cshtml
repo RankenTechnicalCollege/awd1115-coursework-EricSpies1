@@ -1,0 +1,48 @@
+﻿@model QuarterlySales.Models.Employee
+@{
+    ViewData["Title"] = "Add Employee";
+}
+<h3>Add Employee</h3>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="FirstName" class="form-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LastName" class="form-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DOB" class="form-label"></label>
+        <input asp-for="DOB" type="date" class="form-control" />
+        <span asp-validation-for="DOB" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DateOfHire" class="form-label"></label>
+        <input asp-for="DateOfHire" type="date" class="form-control" />
+        <span asp-validation-for="DateOfHire" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ManagerId" class="form-label"></label>
+        <select asp-for="ManagerId" asp-items="ViewBag.ManagerId" class="form-select">
+            <option value="">-- None --</option>
+        </select>
+        <span asp-validation-for="ManagerId" class="text-danger"></span>
+    </div>
+
+    <button class="btn btn-primary">Add</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

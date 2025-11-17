@@ -1,0 +1,44 @@
+﻿@model TripLog.ViewModels.AddTripPage1VM
+@{
+    ViewData["Title"] = "Add Trip";
+    ViewBag.SubHeader = "Add Trip Destination and Dates";
+}
+
+<form asp-action="AddPage1" method="post" class="row g-3">
+    <div class="col-12 col-md-6">
+        <label asp-for="DestinationId" class="form-label">Destination</label>
+        <select asp-for="DestinationId" asp-items="Model.Destinations" class="form-select">
+            <option value="">-- Select destination --</option>
+        </select>
+        <span asp-validation-for="DestinationId" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <label asp-for="AccommodationId" class="form-label">Accommodations</label>
+        <select asp-for="AccommodationId" asp-items="Model.Accommodations" class="form-select">
+            <option value="">-- Select accommodations --</option>
+        </select>
+        <span asp-validation-for="AccommodationId" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <label asp-for="StartDate" class="form-label"></label>
+        <input asp-for="StartDate" class="form-control" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <label asp-for="EndDate" class="form-label"></label>
+        <input asp-for="EndDate" class="form-control" />
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Next</button>
+        <button class="btn btn-secondary" formaction="@Url.Action("Cancel")" formmethod="post">Cancel</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

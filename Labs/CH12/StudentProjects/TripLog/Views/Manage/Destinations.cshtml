@@ -1,0 +1,34 @@
+﻿@model IEnumerable<TripLog.Models.Destination>
+@{
+    ViewData["Title"] = "Manage Destinations";
+}
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-warning">@msg</div>
+}
+
+<p><a asp-action="AddDestination" class="btn btn-primary">Add Destination</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model)
+        {
+            <tr>
+                <td>@d.Name</td>
+                <td class="text-end">
+                    <form asp-action="DeleteDestination" method="post">
+                        <input type="hidden" name="id" value="@d.DestinationId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

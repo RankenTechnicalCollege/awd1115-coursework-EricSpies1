@@ -1,0 +1,64 @@
+﻿@model IEnumerable<TripLog.Models.Trip>
+@{
+    ViewData["Title"] = "Trips";
+    ViewBag.SubHeader = "My Trip Log";
+}
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-success">@msg</div>
+}
+
+<p><a class="btn btn-primary" asp-action="AddPage1">Add Trip</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Destination</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Accommodations</th>
+            <th>Things To Do</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.Destination?.Name</td>
+                <td>@t.StartDate.ToShortDateString()</td>
+                <td>@t.EndDate.ToShortDateString()</td>
+                <td>
+                    @if (t.Accommodation != null)
+                    {
+                        <div>@t.Accommodation.Name</div>
+                        @if (!string.IsNullOrWhiteSpace(t.Accommodation.Phone))
+                        {
+                            <div>Phone: @t.Accommodation.Phone</div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(t.Accommodation.Email))
+                        {
+                            <div>Email: @t.Accommodation.Email</div>
+                        }
+                    }
+                </td>
+                <td>
+                    @foreach (var ta in t.TripActivities)
+                    {
+                        if (ta.Activity != null)
+                        {
+                            <div>@ta.Activity.Name</div>
+                        }
+                    }
+                </td>
+                <td class="text-end">
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@t.TripId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

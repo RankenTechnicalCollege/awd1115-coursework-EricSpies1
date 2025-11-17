@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TripLog.Models.Accommodation>
+@{
+    ViewData["Title"] = "Manage Accommodations";
+}
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-warning">@msg</div>
+}
+
+<p>
+    <a asp-action="AddAccommodation" class="btn btn-primary">Add Accommodation</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.Name</td>
+                <td>@a.Phone</td>
+                <td>@a.Email</td>
+                <td class="text-end">
+                    <form asp-action="DeleteAccommodation" method="post">
+                        <input type="hidden" name="id" value="@a.AccommodationId" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

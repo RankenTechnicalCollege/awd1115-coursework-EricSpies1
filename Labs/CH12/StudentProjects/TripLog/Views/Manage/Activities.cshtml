@@ -1,0 +1,38 @@
+﻿@model IEnumerable<TripLog.Models.Activity>
+@{
+    ViewData["Title"] = "Manage Activities";
+}
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-info">@msg</div>
+}
+
+<p>
+    <a asp-action="AddActivity" class="btn btn-primary">Add Activity</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.Name</td>
+                <td class="text-end">
+                    <form asp-action="DeleteActivity" method="post">
+                        <input type="hidden" name="id" value="@a.ActivityId" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

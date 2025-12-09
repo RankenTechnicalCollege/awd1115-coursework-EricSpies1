@@ -1,0 +1,38 @@
+﻿@model KeyboardShop.Models.Keyboard
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h2 class="mb-3">@Model.Name</h2>
+
+@await Html.PartialAsync("_StatusMessage")
+
+<div class="row g-3">
+    <div class="col-md-5">
+        <img src="~/img/@Model.ImageFile" class="img-fluid rounded border" alt="@Model.Name" />
+    </div>
+
+    <div class="col-md-7">
+        <dl class="row">
+            <dt class="col-4">Brand</dt>
+            <dd class="col-8">@Model.Brand</dd>
+            <dt class="col-4">Switch</dt>
+            <dd class="col-8">@Model.SwitchType</dd>
+            <dt class="col-4">Layout</dt>
+            <dd class="col-8">@Model.Layout</dd>
+            <dt class="col-4">Connectivity</dt>
+            <dd class="col-8">@Model.Connectivity</dd>
+            <dt class="col-4">Price</dt>
+            <dd class="col-8">@Model.Price.ToString("C")</dd>
+            <dt class="col-4">Slug</dt>
+            <dd class="col-8">@Model.Slug</dd>
+        </dl>
+
+        <form asp-controller="Cart" asp-action="Add" method="post" class="d-flex gap-2">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="number" name="qty" value="1" min="1" class="form-control" style="max-width:120px" />
+            <button class="btn btn-primary">Add to Cart</button>
+            <a class="btn btn-outline-secondary" asp-controller="Store" asp-action="Index">Back</a>
+        </form>
+    </div>
+</div>

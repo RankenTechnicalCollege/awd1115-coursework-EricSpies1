@@ -1,0 +1,24 @@
+﻿@model KeyboardShop.Models.Order
+@{
+    ViewData["Title"] = "Checkout";
+}
+<h2 class="mb-3">Checkout</h2>
+
+<form method="post" asp-action="Checkout">
+    <div class="mb-3">
+        <label asp-for="CustomerName" class="form-label"></label>
+        <input asp-for="CustomerName" class="form-control" />
+        <span asp-validation-for="CustomerName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <button class="btn btn-primary">Place Order</button>
+    <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

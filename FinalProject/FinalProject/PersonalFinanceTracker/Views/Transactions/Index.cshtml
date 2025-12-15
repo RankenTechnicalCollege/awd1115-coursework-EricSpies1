@@ -64,12 +64,20 @@
                     </td>
                     <td class="text-end">@tx.Amount.ToString("C")</td>
                     <td class="text-center">
-                        <a asp-action="Edit" asp-route-id="@tx.Id" class="btn btn-sm btn-warning me-1">Edit</a>
+                        <a asp-action="Edit"
+                           asp-route-id="@tx.Id"
+                           asp-route-slug="@tx.Slug"
+                           class="btn btn-sm btn-warning me-1">Edit</a>
+
                         <a asp-action="Details"
                            asp-route-id="@tx.Id"
                            asp-route-slug="@tx.Slug"
                            class="btn btn-sm btn-info me-1">Details</a>
-                        <a asp-action="Delete" asp-route-id="@tx.Id" class="btn btn-sm btn-danger">Delete</a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@tx.Id"
+                           asp-route-slug="@tx.Slug"
+                           class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>
             }

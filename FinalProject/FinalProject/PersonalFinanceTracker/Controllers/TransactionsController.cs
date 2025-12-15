@@ -62,6 +62,7 @@ namespace PersonalFinanceTracker.Controllers
             return View(vm);
         }
 
+        [HttpGet("transactions/{id:int}/{slug}/")]
         public async Task<IActionResult> Details(int id, string? slug)
         {
             var tx = await _db.Transactions
@@ -73,21 +74,19 @@ namespace PersonalFinanceTracker.Controllers
             if (tx == null) return NotFound();
 
             if (!string.Equals(slug, tx.Slug, StringComparison.OrdinalIgnoreCase))
-            {
                 return RedirectToAction(nameof(Details), new { id = tx.Id, slug = tx.Slug });
-            }
 
             return View(tx);
         }
 
-        [HttpGet("transactions/create")]
+        [HttpGet("transactions/create/")]
         public async Task<IActionResult> Create()
         {
             await PopulateLookupsAsync();
             return View();
         }
 
-        [HttpPost("transactions/create")]
+        [HttpPost("transactions/create/")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Transaction tx, int[]? categoryIds)
         {
@@ -111,14 +110,17 @@ namespace PersonalFinanceTracker.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("transactions/edit/{id:int}")]
-        public async Task<IActionResult> Edit(int id)
+        [HttpGet("transactions/edit/{id:int}/{slug}/")]
+        public async Task<IActionResult> Edit(int id, string? slug)
         {
             var tx = await _db.Transactions
                 .Include(t => t.TransactionCategories)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
             if (tx == null) return NotFound();
+
+            if (!string.Equals(slug, tx.Slug, StringComparison.OrdinalIgnoreCase))
+                return RedirectToAction(nameof(Edit), new { id = tx.Id, slug = tx.Slug });
 
             await PopulateLookupsAsync(
                 selectedAccountId: tx.AccountId,
@@ -128,9 +130,9 @@ namespace PersonalFinanceTracker.Controllers
             return View(tx);
         }
 
-        [HttpPost("transactions/edit/{id:int}")]
+        [HttpPost("transactions/edit/{id:int}/{slug}/")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Transaction form, int[]? categoryIds)
+        public async Task<IActionResult> Edit(int id, string? slug, Transaction form, int[]? categoryIds)
         {
             if (id != form.Id) return NotFound();
             if (!ModelState.IsValid)
@@ -164,8 +166,8 @@ namespace PersonalFinanceTracker.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("transactions/delete/{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpGet("transactions/delete/{id:int}/{slug}/")]
+        public async Task<IActionResult> Delete(int id, string? slug)
         {
             var tx = await _db.Transactions
                 .Include(t => t.Account)
@@ -173,10 +175,14 @@ namespace PersonalFinanceTracker.Controllers
                 .FirstOrDefaultAsync(t => t.Id == id);
 
             if (tx == null) return NotFound();
+
+            if (!string.Equals(slug, tx.Slug, StringComparison.OrdinalIgnoreCase))
+                return RedirectToAction(nameof(Delete), new { id = tx.Id, slug = tx.Slug });
+
             return View(tx);
         }
 
-        [HttpPost("transactions/delete/{id:int}")]
+        [HttpPost("transactions/delete/{id:int}/{slug}/")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -200,4 +206,3 @@ namespace PersonalFinanceTracker.Controllers
         }
     }
 }
-

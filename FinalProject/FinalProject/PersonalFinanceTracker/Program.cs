@@ -55,16 +55,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 
-
 app.MapControllerRoute(
     name: "budget",
     pattern: "budget/{year:int}/{month:int}/",
     defaults: new { controller = "Budget", action = "Index" });
-
-app.MapControllerRoute(
-    name: "transaction_friendly",
-    pattern: "t/{id:int}/{slug?}/",
-    defaults: new { controller = "Transactions", action = "Details" });
 
 app.MapControllerRoute(
     name: "areas",

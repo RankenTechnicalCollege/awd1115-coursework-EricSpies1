@@ -14,47 +14,63 @@ namespace PersonalFinanceTracker.Controllers
         public TransactionsController(ApplicationDbContext db) => _db = db;
 
         [HttpGet("transactions/")]
-        public async Task<IActionResult> Index(int page = 1, string? search = null)
+        public async Task<IActionResult> Index(int page = 1, string? search = null, int? pageSize = null)
         {
-            const int pageSize = 10;
+            const int defaultPageSize = 8;
 
-            var query = _db.Transactions
-                .Include(t => t.Account)
-                .Include(t => t.TransactionCategories)
-                    .ThenInclude(tc => tc.Category)
-                .AsQueryable();
+            if (pageSize.HasValue && (pageSize == 5 || pageSize == 8 || pageSize == 10 || pageSize == 20))
+            {
+                HttpContext.Session.SetInt32("TxPageSize", pageSize.Value);
+            }
+
+            int resolvedPageSize = HttpContext.Session.GetInt32("TxPageSize") ?? defaultPageSize;
+
+            var baseQuery = _db.Transactions.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
                 var term = search.Trim().ToLower();
-                query = query.Where(t =>
+                baseQuery = baseQuery.Where(t =>
                     t.Payee.ToLower().Contains(term) ||
                     (t.Notes != null && t.Notes.ToLower().Contains(term))
                 );
             }
 
-            var totalCount = await query.CountAsync();
+            var totalCount = await baseQuery.CountAsync();
 
-            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-            if (totalPages == 0)
-                totalPages = 1;
+            var totalPages = (int)Math.Ceiling(totalCount / (double)resolvedPageSize);
+            if (totalPages < 1) totalPages = 1;
 
             if (page < 1) page = 1;
             if (page > totalPages) page = totalPages;
 
-            var txs = await query
+            var pageIds = await baseQuery
                 .OrderByDescending(t => t.Date)
                 .ThenByDescending(t => t.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip((page - 1) * resolvedPageSize)
+                .Take(resolvedPageSize)
+                .Select(t => t.Id)
                 .ToListAsync();
+
+            var txs = await _db.Transactions
+                .Where(t => pageIds.Contains(t.Id))
+                .Include(t => t.Account)
+                .Include(t => t.TransactionCategories)
+                    .ThenInclude(tc => tc.Category)
+                .ToListAsync();
+
+            var orderMap = pageIds
+                .Select((id, idx) => new { id, idx })
+                .ToDictionary(x => x.id, x => x.idx);
+
+            txs = txs.OrderBy(t => orderMap[t.Id]).ToList();
 
             var vm = new TransactionListViewModel
             {
                 Transactions = txs,
                 PageNumber = page,
                 TotalPages = totalPages,
-                PageSize = pageSize,
+                PageSize = resolvedPageSize,
                 TotalCount = totalCount,
                 SearchTerm = search ?? ""
             };
@@ -135,6 +151,7 @@ namespace PersonalFinanceTracker.Controllers
         public async Task<IActionResult> Edit(int id, string? slug, Transaction form, int[]? categoryIds)
         {
             if (id != form.Id) return NotFound();
+
             if (!ModelState.IsValid)
             {
                 await PopulateLookupsAsync(form.AccountId, categoryIds);
@@ -184,7 +201,7 @@ namespace PersonalFinanceTracker.Controllers
 
         [HttpPost("transactions/delete/{id:int}/{slug}/")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string? slug)
         {
             var tx = await _db.Transactions.FindAsync(id);
             if (tx != null)

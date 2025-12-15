@@ -3,16 +3,17 @@ body, .app-body {
 }
 
 :root {
-    --brand-500: #0d6efd;
-    --brand-600: #0b5ed7;
-    --text-color: #1b1f24;
+    --brand-500: #7c3aed;
+    --brand-600: #6d28d9;
+    --text-color: #111827;
     --surface: #ffffff;
-    --surface-muted: #f8f9fa;
+    --surface-muted: #f3f4f6;
 }
 
 body {
     color: var(--text-color);
     background: var(--surface);
+    min-height: 100vh;
 }
 
 .bg-brand {
@@ -36,4 +37,6 @@ body {
 
 .footer {
     background: var(--surface-muted);
+    position: static;
+    width: 100%;
 }

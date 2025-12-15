@@ -6,7 +6,7 @@
 <section class="row align-items-center g-4">
     <div class="col-12 col-lg-6">
         <h1 class="display-5 fw-bold">Take control of your money</h1>
-        <p class="lead lead-lg">
+        <p class="lead">
             Personal Finance Tracker helps you organize accounts, log transactions,
             categorize spending, and keep budgets on track—all in one place.
         </p>
@@ -16,12 +16,20 @@
         <p class="mb-1">• Categorize spending to see where your money goes.</p>
         <p class="mb-3">• View monthly budgets and simple reports on desktop or phone.</p>
 
-        <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Register">Get Started</a>
-        <a class="btn btn-outline-primary btn-lg ms-2" asp-controller="Accounts" asp-action="Index">View Accounts</a>
+        <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Register">
+            Get Started
+        </a>
+        <a class="btn btn-outline-primary btn-lg ms-2"
+           asp-controller="Accounts"
+           asp-action="Index">
+            View Accounts
+        </a>
     </div>
 
     <div class="col-12 col-lg-6 text-center">
-        <img src="~/img/logo.svg" alt="Personal Finance Tracker logo" class="img-fluid" />
+        <img src="~/img/logo.svg"
+             alt="Personal Finance Tracker logo"
+             class="img-fluid mb-3" />
     </div>
 </section>
 
@@ -29,7 +37,30 @@
     <h2 class="h4">Why this app?</h2>
     <p>
         Managing finances is easier when everything is in one place. This app is designed
-        to be simple, fast, and mobile-friendly. As the semester progresses, new features like
-        budgets, reports, and goals will be added.
+        to be simple, fast, and mobile-friendly.
     </p>
+</section>
+
+<section class="mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="h5 mb-3">
+                <i class="bi bi-quote"></i>
+                Daily Motivation
+            </h2>
+
+            <blockquote class="blockquote mb-0">
+                <p class="fs-5">
+                    “@ViewData["QuoteText"]”
+                </p>
+                <footer class="blockquote-footer">
+                    @ViewData["QuoteAuthor"]
+                </footer>
+            </blockquote>
+
+            <p class="text-muted small mt-3 mb-0">
+                Quote powered by a public 3rd-party API.
+            </p>
+        </div>
+    </div>
 </section>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PersonalFinanceTracker.Data;
@@ -7,6 +8,7 @@ using PersonalFinanceTracker.Models;
 namespace PersonalFinanceTracker.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class TransactionsController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -119,7 +121,7 @@ namespace PersonalFinanceTracker.Areas.Admin.Controllers
 
         [HttpPost("admin/transactions/delete/{id:int}/{slug}/")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string? slug)
         {
             var tx = await _db.Transactions.FindAsync(id);
             if (tx != null)

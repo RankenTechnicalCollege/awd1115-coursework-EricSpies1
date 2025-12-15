@@ -35,6 +35,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PersonalFinanceTracker.styles.css" asp-append-version="true" />
@@ -44,8 +46,17 @@
         <nav class="navbar navbar-expand-sm navbar-dark bg-brand border-bottom shadow-sm mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/img/logo.png" alt="Personal Finance Tracker Logo" class="img-fluid me-2" style="height:32px;" />
-                    <span class="fw-bold">PersonalFinanceTracker</span>
+                    <img src="~/img/logo-icon.png"
+                         alt="Personal Finance Tracker Icon"
+                         style="height:28px; width:auto;"
+                         class="me-2" />
+
+                    <img src="~/img/logo.svg"
+                         alt="Personal Finance Tracker"
+                         style="height:24px; width:auto;"
+                         class="me-2" />
+
+                    <span class="visually-hidden">Personal Finance Tracker</span>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
@@ -56,21 +67,48 @@
                 <div id="mainNav" class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link @NavActive("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link @NavActive("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door me-1"></i> Home
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @NavActive("Accounts", "Index")" asp-area="" asp-controller="Accounts" asp-action="Index">Accounts</a>
+                            <a class="nav-link @NavActive("Accounts", "Index")" asp-area="" asp-controller="Accounts" asp-action="Index">
+                                <i class="bi bi-wallet2 me-1"></i> Accounts
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @NavActive("Transactions", "Index")" asp-area="" asp-controller="Transactions" asp-action="Index">Transactions</a>
+                            <a class="nav-link @NavActive("Transactions", "Index")" asp-area="" asp-controller="Transactions" asp-action="Index">
+                                <i class="bi bi-receipt me-1"></i> Transactions
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @NavActive("Dashboard", "Index")" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                            <a class="nav-link @NavActive("Dashboard", "Index")" asp-area="" asp-controller="Dashboard" asp-action="Index">
+                                <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @NavActive("Reports", "Index")" asp-area="" asp-controller="Reports" asp-action="Index">Reports</a>
+                            <a class="nav-link @NavActive("Reports", "Index")" asp-area="" asp-controller="Reports" asp-action="Index">
+                                <i class="bi bi-bar-chart-line me-1"></i> Reports
+                            </a>
                         </li>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @NavActive("Users", "Index", "Admin")"
+                                   asp-area="Admin" asp-controller="Users" asp-action="Index">
+                                    <i class="bi bi-people me-1"></i> Manage Users
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @NavActive("Roles", "Index", "Admin")"
+                                   asp-area="Admin" asp-controller="Roles" asp-action="Index">
+                                    <i class="bi bi-shield-lock me-1"></i> Manage Roles
+                                </a>
+                            </li>
+                        }
                     </ul>
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -78,8 +116,7 @@
     </header>
 
     <div class="container flex-grow-1">
-        <main role="main" class="pb-3">
-
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>

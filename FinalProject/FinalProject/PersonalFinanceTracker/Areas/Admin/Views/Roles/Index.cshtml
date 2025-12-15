@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+
+@{
+    ViewData["Title"] = "Manage Roles";
+}
+
+<h2 class="mb-3">Manage Roles</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<form asp-area="Admin" asp-controller="Roles" asp-action="Create" method="post" class="row g-2 mb-3">
+    @Html.AntiForgeryToken()
+    <div class="col-auto">
+        <input name="roleName" class="form-control" placeholder="New role name" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Create Role</button>
+    </div>
+</form>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Role</th>
+            <th>Role Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Name</td>
+                <td class="text-muted small">@r.Id</td>
+            </tr>
+        }
+    </tbody>
+</table>

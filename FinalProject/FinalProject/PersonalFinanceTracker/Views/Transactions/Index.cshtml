@@ -20,11 +20,10 @@
     <div class="col-auto">
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
-
 </form>
 
 <p>
-    <a asp-action="Create" class="btn btn-success">Add Transaction</a>
+    <a asp-area="Admin" asp-controller="Transactions" asp-action="Create" class="btn btn-success">Add Transaction</a>
 </p>
 
 <table class="table table-striped table-bordered">
@@ -64,7 +63,9 @@
                     </td>
                     <td class="text-end">@tx.Amount.ToString("C")</td>
                     <td class="text-center">
-                        <a asp-action="Edit"
+                        <a asp-area="Admin"
+                           asp-controller="Transactions"
+                           asp-action="Edit"
                            asp-route-id="@tx.Id"
                            asp-route-slug="@tx.Slug"
                            class="btn btn-sm btn-warning me-1">Edit</a>
@@ -74,7 +75,9 @@
                            asp-route-slug="@tx.Slug"
                            class="btn btn-sm btn-info me-1">Details</a>
 
-                        <a asp-action="Delete"
+                        <a asp-area="Admin"
+                           asp-controller="Transactions"
+                           asp-action="Delete"
                            asp-route-id="@tx.Id"
                            asp-route-slug="@tx.Slug"
                            class="btn btn-sm btn-danger">Delete</a>
@@ -97,7 +100,6 @@
 {
     <nav aria-label="Transaction pages">
         <ul class="pagination">
-
             <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
                 <a class="page-link"
                    asp-action="Index"
@@ -127,8 +129,8 @@
                     Next
                 </a>
             </li>
-
         </ul>
+
         <div class="text-muted small">
             Showing page @Model.PageNumber of @Model.TotalPages
             (@Model.TotalCount total results)
